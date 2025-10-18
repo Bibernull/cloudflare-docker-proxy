@@ -1,12 +1,6 @@
 import { env } from "cloudflare:workers";
 
 const CUSTOM_DOMAIN = env.CUSTOM_DOMAIN;
-
-addEventListener("fetch", (event) => {
-  event.passThroughOnException();
-  event.respondWith(handleRequest(event.request));
-});
-
 const dockerHub = "https://registry-1.docker.io";
 
 const routes = {
@@ -177,4 +171,11 @@ function responseUnauthorized(url) {
     status: 401,
     headers: headers,
   });
+}
+
+
+export default {
+  fetch(request) {
+    return handleRequest(request);
+  }
 }
