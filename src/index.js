@@ -1,3 +1,7 @@
+import { env } from "cloudflare:workers";
+
+const CUSTOM_DOMAIN = env.CUSTOM_DOMAIN;
+
 addEventListener("fetch", (event) => {
   event.passThroughOnException();
   event.respondWith(handleRequest(event.request));
