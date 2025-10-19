@@ -1,6 +1,6 @@
-import { env } from "cloudflare:workers";
+import {env} from "cloudflare:workers";
 
-const CUSTOM_DOMAIN = env.CUSTOM_DOMAIN;
+const {CUSTOM_DOMAIN, MODE, TARGET_UPSTREAM} = env;
 const dockerHub = "https://registry-1.docker.io";
 
 const routes = {
@@ -149,9 +149,9 @@ async function fetchToken(wwwAuthenticate, scope, authorization) {
   }
   const headers = new Headers();
   if (authorization) {
-    headers.set("Authorization", authorization);
+    headders.set("Authorization", authorization);
   }
-  return await fetch(url, { method: "GET", headers: headers });
+  return await fetch(url, {method: "GET", headers: headers});
 }
 
 function responseUnauthorized(url) {
@@ -167,9 +167,9 @@ function responseUnauthorized(url) {
       `Bearer realm="https://${url.hostname}/v2/auth",service="cloudflare-docker-proxy"`
     );
   }
-  return new Response(JSON.stringify({ message: "UNAUTHORIZED" }), {
+  return new Response(JSON.stringify({message: "UNAUTHORIZED"}), {
     status: 401,
-    headers: headers,
+    headers,
   });
 }
 
